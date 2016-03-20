@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1 {
+            width: 200px;
+            height: 200px;
+            background: #000;
+            filter:alpha(opacity:30);
+            opacity: 0.3;
+        }
+    </style>
+    <script>
+        window.onload = function ()
+        {
+            var oSpan = document.getElementById('btn');
+            var oDiv = document.getElementById('div1');
+            oSpan.innerHTML = '转行就对了';
+            oDiv.onmouseover = function ()
+            {
+                move(100);
+            };
+            oDiv.onmouseout = function ()
+            {
+                move(30);
+            }
+        };
+        var timer = null;
+
+        var alpha = 30;
+        var oDiv = document.getElementById('div1');
+
+        function move(iTarget){
+            clearInterval(timer);
+            timer = setInterval(function(){
+                var speed = 0;
+                if(alpha>iTarget)
+                {
+                    speed = -10;
+                }
+                else{
+                    speed = 10;
+                }
+                if(alpha == iTarget)
+                {
+                    clearInterval(timer);
+                }
+                else
+                {
+                    alpha += speed;
+                    oDiv.style.filter = 'alpha(opacity:'+alpha+')';
+                    oDiv.style.opacity = alpha/100;
+                }
+            },30);
+        }
+    </script>
+</head>
+<body>
+    <div id="div1"></div>
+    <span id="btn"></span>
+</body>
+</html>

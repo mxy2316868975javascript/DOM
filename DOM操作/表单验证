@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网易云音乐登录框</title>
+<style>
+*{
+    padding: 0;
+    margin: 0;
+    font: bold 20px/2 "微软雅黑";   
+}
+form{
+    width: 400px;
+    margin: 100px auto auto;
+    border: 2px solid #eeeeee;      
+}
+legend{
+    width: 390px;
+    padding-left: 10px;
+    background-color: black;
+    color: white;
+}
+fieldset{
+    height: 200px;
+    width: 300px;
+    margin: 30px auto 0;
+    border: none;
+}
+#p-container{
+    margin-top: 20px;
+}  
+label{
+    display: inline-block;
+}
+#mobile, #password{
+    float: right;
+    margin-top: 3px;
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+}
+button{
+    margin-top: 20px;
+    width: 100%;
+    background-color: #3388ff;
+    color: white;
+    border: none;
+}
+.invalid{
+    border-color: red;
+    color: red;
+}
+.disabled{
+    background-color: #ddd;
+    cursor: default;
+}
+</style>
+</head>
+<body>
+    <form action="/login" id="loginForm">
+        <legend>手机号码登录</legend>
+        <fieldset>
+            <div id="m-container">
+                <label for="mobile">手机号：</label>
+                <input type="text" id="mobile" name="mobile" maxlength="11" required pattern="^1\d{10}$">
+            </div>
+            <div id="p-container">
+                <label for="password">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                <input type="password" id="password" name="password" minlength="6" maxlength="16">
+            </div>
+            <div> 
+                <button id="login">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+            </div>
+        </fieldset>
+    </form>
+<script>
+    (function(){
+        var form = document.getElementById('loginForm');
+            m = document.getElementById('mobile'); 
+            p = document.getElementById('password');
+            b = document.getElementById('login');
+            hasInvalid = []; //用hasInvalid数组来标记是否有invalid类样式
+        hasInvalid['mobile'] = false;
+        hasInvalid['password'] = false;
+ 
+        //addEvent兼容IE
+        var addEvent = document.addEventListener ? function(elem, type, listener, useCapture) {
+            elem.addEventListener(type, listener, useCapture);
+        } : 
+        function(elem, type, listener, useCapture){
+            elem.attachEvent('on'+type, listener);
+        };
+ 
+        //检查moblie
+        function checkMoblie() {
+            var mValue = m.value;
+            if(! /^1\d{10}$/.test(mValue)) {
+                m.classList.add('invalid');
+                hasInvalid['mobile'] = true;
+            }          
+        }
+        //检查password
+        function checkPassword() {
+            var pValue = p.value;
+            if(pValue.length<6 || pValue.length>16) {
+                p.classList.add('invalid');
+                hasInvalid['password'] = true;
+            }          
+        }
+ 
+        //添加blur事件，若输入非法，给输入框添加.invalid类样式
+        addEvent(m, 'blur', function(event){
+            checkMoblie();
+        });
+ 
+        addEvent(p, 'blur', function(event){
+            checkPassword();
+        });
+ 
+        //添加focus事件，若获取焦点，去除输入框的.invalid类样式
+        addEvent(m, 'focus', function(event){
+            if(hasInvalid['mobile']) {
+                m.classList.remove('invalid');
+            }
+        });
+ 
+        addEvent(p, 'focus', function(event){
+            if(hasInvalid['password']) {
+                p.classList.remove('invalid');
+            }
+        });
+ 
+        //添加submit事件，点击按钮做验证，通过后先禁用按钮再提交表单
+        addEvent(b, 'submit', function(event){
+            event.preventDefault();
+            checkMoblie();
+            checkPassword();

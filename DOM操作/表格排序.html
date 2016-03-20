@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表格</title>
+	<style>
+	table {
+		margin: 0 auto;
+		text-align: center;
+	}
+	</style>
+	<script>
+	window.onload = function()
+	{
+		var oTab = document.getElementById('tab1');
+		var oBtn = document.getElementById('btn');
+
+		oBtn.onclick = function()
+		{
+			var arr = [];
+			for(var i=0;i<oTab.tBodies[0].rows.length;i++)
+			{
+				arr[i] = oTab.tBodies[0].rows[i];
+
+			}
+			arr.sort(function(a,b){
+				var n1 = parseInt(a.cells[0].innerHTML);
+				var n2 = parseInt(b.cells[0].innerHTML);
+
+				return n1-n2;
+			});
+			for(var i=0;i<arr.length;i++)
+			{
+				oTab.tBodies[0].appendChild(arr[i]);
+			}
+		}
+
+
+	}
+	</script>
+</head>
+<body>
+	<input id='btn' type="button" value='排序'>
+	<table id='tab1' border='1' width='500'>
+		<thead>
+			<tr>
+				<td>序号</td>
+				<td>姓名</td>
+				<td>年龄</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td>张三</td>
+				<td>12</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>李四</td>
+				<td>32</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>王五</td>
+				<td>44</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>前六</td>
+				<td>21</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>马坝</td>
+				<td>24</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>马坝</td>
+				<td>24</td>
+			</tr>
+			<tr>
+				<td>6</td>
+				<td>马坝</td>
+				<td>24</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>马坝</td>
+				<td>24</td>
+			</tr>
+			<tr>
+				<td>8</td>
+				<td>马坝</td>
+				<td>24</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

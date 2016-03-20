@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DOM操作</title>
+	<style>
+	.box {
+		background: red;
+	}
+	</style>
+</head>
+<body>
+
+	<p id='p' class='box'>1</p>
+
+
+
+	<script>
+	//获取元素ID
+
+	function $(id)
+	{
+		return document.getElementById(id);
+	}
+	var oP = $('p');
+	console.log(oP);
+	var b = oP.querySelectorAll('#id .class .class, .class')
+	</script>
+</body>
+</html>
